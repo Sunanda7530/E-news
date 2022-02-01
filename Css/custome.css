@@ -1,0 +1,18 @@
+h1{
+  text-transform: capitalize;
+}
+#newBox{
+  min-height: 500px;
+}
+.card img{
+    height:192px;
+  }
+  .card-title{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card-text{
+    height: 70px;
+    overflow: hidden;
+  }

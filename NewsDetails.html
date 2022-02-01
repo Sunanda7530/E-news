@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <title>New Project</title>
+  <style>
+    .page-container {
+      min-height: 500px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- header start -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="./index.html">News Api</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./newslist.html?cat=general">General</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./newslist.html?cat=business">Business</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./newslist.html?cat=entertainment">Entertainment</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./newslist.html?cat=technology">Technology</a>
+          </li>
+
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+  <!-- header end -->
+
+  <!-- Top Category news start -->
+  <div class="page-container container-fluid mt-2">
+    <div class="row">
+      <div class="col-4">
+        <img id="newsImg" src="./Image/Slider/wedding1.jpg" alt="News Image" class="img-fluid">
+      </div>
+      <div class="col-8">
+        <h2 class="bg-dark text-light px-2" id="newsHead">News Headlind</h2>
+        <p id="newsDetail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum voluptate laudantium soluta voluptates
+          commodi assumenda at aspernatur maxime qui illo inventore, provident architecto ratione tempore. Repellendus
+          aut alias in numquam.</p>
+          <h4 id="newsSource" class="text-end"></h4>
+      </div>
+    </div>
+  </div>
+  <!-- Top Category news end -->
+
+  <!-- footer start -->
+  <!-- footer start -->
+  <div class="bg-dark text-light">
+    <div class="container">
+      <footer class="py-3 mt-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+        </ul>
+        <p class="text-center text-muted">© 2021 Company, Inc</p>
+      </footer>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+  <script>
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    function getCategoryNews() {
+      let x = fetch("https://newsapi.org/v2/top-headlines?country=in&category=" + params.cat + "&apiKey=3f9d2bafb05f45eba55b2dcc485e25a8");
+      x.then((res) => {
+        return res.json();
+      }).then((data) => {
+        let newsDetails = data.articles.filter(news => news.url == params.url);
+        console.log(newsDetails[0]);
+        let {title,urlToImage,description,url,content,source,publishedAt} = newsDetails[0];
+        document.getElementById("newsImg").setAttribute("src",urlToImage);
+        document.getElementById("newsHead").innerHTML = title;
+        document.getElementById("newsDetail").innerHTML = description;
+        // document.getElementById("newsSource").innerHTML = source.name +" "+ publishedAt
+        document.getElementById("newsSource").innerHTML = `<span class="text-danger">${source.name}</span> <span class="text-mute">${publishedAt}</span>`
+        //bindData(data.articles);
+      })
+    }
+
+    getCategoryNews();
+  </script>
+</body>
+
+</html>
